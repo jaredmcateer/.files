@@ -1,0 +1,11 @@
+- clean: ['~']
+
+- link:
+    ~/.tmux.conf: tmux.conf
+    ~/.nvim: nvim
+    ~/.nvimrc: nvimrc
+    ~/.bashrc: bashrc
+    ~/.bash_aliases: bash_aliases
+
+- shell:
+  - [git submodule update --init --recursive, Instaling submodules]
