@@ -6,6 +6,7 @@
     ~/.nvimrc: nvimrc
     ~/.bashrc: bashrc
     ~/.bash_aliases: bash_aliases
+    ~/.gitconfig: gitconfig
 
 - shell:
   - [git submodule update --init --recursive, Instaling submodules]

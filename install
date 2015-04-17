@@ -3,9 +3,13 @@
 set -e
 
 CONFIG=".install.conf.yaml"
-DOTBOT_DIR="dobot"
+DOTBOT_DIR="dotbot"
 DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [ ! -d "${BASEDIR}/nvim/bundle/Vundle.vim" ]; then
+  git clone https://github.com/gmarik/Vundle.vim.git "${BASEDIR}/nvim/bundle/Vundle.vim"
+fi
 
 cd "${BASEDIR}"
 

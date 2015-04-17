@@ -1,0 +1,26 @@
+[color]
+	ui = true
+[user]
+	name = Jared McAteer
+	email = jared.mcateer@gettyimages.com
+[alias]
+	st = status -s
+	d = diff
+	dc = diff --cached
+	filelog = log -u
+	fl = log -u
+	dl = git config --global alias.fl log
+	dlc = diff --cached HEAD^
+	ls = log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate
+	ll = log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat
+	lds = log --pretty=format:\"%C(yellow)%h\\\\ %ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=short
+	dr = "!f() { git diff \"$1\"^..\"$1\"; }; f"
+	diffr = "!f() { git diff \"$1\"^..\"$1\"; }; f"
+	llr = "!f() { git ll \"$1\"^..\"$1\"; }; f"
+	la = "!git config -l | grep alias | cut -c 7-"
+[mergetool]
+	path = nvim
+[diff]
+	tool = nvim
+[difftool]
+	prompt = false
