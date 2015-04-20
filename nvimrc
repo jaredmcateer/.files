@@ -6,6 +6,7 @@ call vundle#begin('~/.nvim/bundle')
 Plugin 'gmarik/Vundle.vim'
 
 Plugin 'jaredmcateer/vim-atom-dark'
+Plugin 'tpope/vim-surround.git'
 Plugin 'Townk/vim-autoclose'
 Plugin 'tpope/vim-commentary'
 Plugin 'kien/ctrlp.vim'
