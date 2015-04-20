@@ -59,15 +59,20 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Add home bin folder to path
+export PATH="$HOME/bin:$PATH"
+
 # Better prompt with git support
 source ~/.files/.bash-git-prompt/gitprompt.sh 
 
-export PATH="$HOME/bin:$PATH"
-
-export NVM_DIR="/home/jared/.nvm"
+# Init node version manager
+export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
+# Init ruby version manager
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+
+# Init fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
