@@ -77,3 +77,8 @@ there and it can be overwhelming and possibly cause some differnt behaviour from
 what you would expect.
 
 Because I'm using NVM, `sudo` is not required when installing global npm packages!
+
+RE Neovim, it will install a binary you can load as `nvim`, if you want to 
+continue to use `vim`, then just add an alias to
+[bash_aliases](https://github.com/jaredmcateer/.files/blob/master/bash_aliases)
+or replace `vim` in `/usr/bin` (not recommended if you share this machine).
