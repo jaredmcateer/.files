@@ -46,7 +46,7 @@ And update your remote repos that need it:
 Once you've done all that to setup your dot files clone this repo:
 
 ```
-git clone https://github.com/jaredmcateer/dotfiles.git ~/.files
+git clone https://github.com/jaredmcateer/.files.git ~/.files
 cd ~/.files
 ./install
 ```
