@@ -5,8 +5,8 @@
 	email = jared.mcateer@gettyimages.com
 [alias]
 	st = status -s
-	d = diff
-	dc = diff --cached
+	d = difftool
+	dc = difftool
 	filelog = log -u
 	fl = log -u
 	dl = git config --global alias.fl log
@@ -21,8 +21,10 @@
 [mergetool]
 	path = nvim
 [diff]
-	tool = nvim
+	tool = nvimdiff
 [difftool]
 	prompt = false
+[difftool "nvimdiff"]
+	cmd = "nvim -d -u ~/.nvimrc \"$LOCAL\" \"$REMOTE\""
 [push]
 	default = simple
