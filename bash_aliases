@@ -81,9 +81,9 @@ myinfo () {
     uname -m | awk '{ printf "%s | " , $1 }'
     printf "\n"
     uptime | awk '{ printf "Uptime: %s %s %s", $3, $4, $5 }' | sed 's/,//g'
-           printf "\n"
-             cputemp | head -1 | awk '{ printf "%s %s %s\n", $1, $2, $3 }'
-             cputemp | tail -1 | awk '{ printf "%s %s %s\n", $1, $2, $3 }'
+    printf "\n"
+    cputemp | head -1 | awk '{ printf "%s %s %s\n", $1, $2, $3 }'
+    cputemp | tail -1 | awk '{ printf "%s %s %s\n", $1, $2, $3 }'
 }
 
 
