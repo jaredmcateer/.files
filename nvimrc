@@ -13,6 +13,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'bling/vim-airline'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'sjl/splice.vim'
@@ -622,6 +623,8 @@ let g:atia_attributes_complete = 0
 
 noremap  <F2> :NERDTreeToggle<cr>
 inoremap <F2> <esc>:NERDTreeToggle<cr>
+noremap  <F3> :NERDTreeFind<cr>
+inoremap <F3> <esc>:NERDTreeFind<cr>
 
 augroup ps_nerdtree
     au!
@@ -642,6 +645,7 @@ let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let NERDChristmasTree = 1
 let NERDTreeChDirMode = 2
+let NERDTreeQuitOnOpen = 1
 let NERDTreeMapJumpFirstChild = 'gK'
 
 " }}}
