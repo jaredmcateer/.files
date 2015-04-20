@@ -54,7 +54,7 @@ cd ~/.files
 ### Misc
 
 This also installs powerline modified fonts for your airline bar. Switch your
-terminal font to one of them for a more beautify experiences
+terminal font to one of them for a more beautiful experience.
 
 Notes
 -----
