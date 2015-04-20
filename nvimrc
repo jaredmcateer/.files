@@ -295,6 +295,14 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
+if has('nvim')
+  tnoremap <C-h> <c-\><c-n><C-w>h
+  tnoremap <C-j> <c-\><c-n><C-w>j
+  tnoremap <C-k> <c-\><c-n><C-w>k
+  tnoremap <C-l> <c-\><c-n><C-w>l
+  au WinEnter *term://* call feedkeys('i')
+endif
+
 noremap <leader>v <C-w>v
 
 " }}}
