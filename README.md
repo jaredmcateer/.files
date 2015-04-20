@@ -28,7 +28,7 @@ Basically it breaks down to
 * [Synergy](http://synergy-project.org/download/) (KVM for multiple computers)
 * Virtual Box
 
-Note: Don't forget to setup your SSH keys
+#### SSH Keys
 
 ```
 ssh-keygen -t rsa -C "<your email>"
@@ -40,6 +40,10 @@ And update your remote repos that need it:
 * https://github.com/settings/ssh
 * https://bitbucket.org/account/user/jmcateer/ssh-keys/
 * Internal company, etc
+
+#### Git config
+
+**Update the gitconfig with your own identity!**
 
 ### Install
 
@@ -65,3 +69,10 @@ If you want a good overview of what's going on there he posted a [great
 video](https://www.youtube.com/watch?v=xZuy4gBghho).
 
 I recommend you watch it because there's a lot of useful information there.
+
+
+I would read over the files you're installing, there's a lot of tricky shit in
+there and it can be overwhelming and possibly cause some differnt behaviour from
+what you would expect.
+
+Because I'm using NVM, `sudo` is not required when installing global npm packages!
