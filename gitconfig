@@ -24,3 +24,5 @@
 	tool = nvim
 [difftool]
 	prompt = false
+[push]
+	default = simple

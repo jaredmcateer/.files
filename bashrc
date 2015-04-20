@@ -113,10 +113,15 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Better prompt with git support
+source ~/.files/.bash-git-prompt/gitprompt.sh 
+
 export PATH="$HOME/bin:$PATH"
 
 export NVM_DIR="/home/jared/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+

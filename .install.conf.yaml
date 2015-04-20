@@ -10,3 +10,4 @@
 
 - shell:
   - [git submodule update --init --recursive, Instaling submodules]
+  - [./fonts/install.sh]
