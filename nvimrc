@@ -50,7 +50,6 @@ set autowrite
 set autoread
 set shiftround
 set title
-set nowrap
 set colorcolumn=80,120
 
 " Don't try to highlight lines longer than 400 chars
@@ -80,6 +79,9 @@ augroup trailing
     au InsertEnter * :set listchars-=trail:⌴
     au InsertLeave * :set listchars+=trail:⌴
 augroup END
+
+" Remove trailing whitespace on save
+autocmd FileType c,cpp,java,php,js,phtml,html BufWritePre * :%s/\s\+$//e
 
 " }}}
 
@@ -635,8 +637,7 @@ let NERDTreeMapJumpFirstChild = 'gK'
 
 " }}}
 " Airline {{{
-
-
+  let g:airline_powerline_fonts = 1
 " }}}
 " Splice {{{
 
