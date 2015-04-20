@@ -6,7 +6,7 @@
 [alias]
 	st = status -s
 	d = difftool
-	dc = difftool
+	dc = difftool --cached
 	filelog = log -u
 	fl = log -u
 	dl = git config --global alias.fl log
