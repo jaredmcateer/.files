@@ -9,7 +9,8 @@ Setup
 ### Prerequites
 
 There is some preambulatory stuff I install (some of it necessary for this to
-work and some of it not.) Everything is included in the system-setup.sh file.
+work and some of it not.) Mostly everythign is included in the system-setup.sh 
+file.
 
 Basically it breaks down to
 
@@ -24,13 +25,13 @@ Basically it breaks down to
 * Node Version Manager
 * Rbenv (Ruby version manager)
 * Fzf (ctrl-p for bash, it's amazing)
-* Synergy (KVM for multiple computers)
+* [Synergy](http://synergy-project.org/download/) (KVM for multiple computers)
 * Virtual Box
 
 Note: Don't forget to setup your SSH keys
 
 ```
-ssh-keygen -t rsa -C "jared.mcateer@gmail.com"
+ssh-keygen -t rsa -C "<your email>"
 cat ~/.id_rsa.pub
 ```
 
@@ -50,3 +51,17 @@ cd ~/.files
 ./install
 ```
 
+### Misc
+
+This also installs powerline modified fonts for your airline bar. Switch your
+terminal font to one of them for a more beautify experiences
+
+Notes
+-----
+
+My vimrc is HEAVILY copied from [slj's 
+dotfiles](https://bitbucket.org/sjl/dotfiles/overview).
+If you want a good overview of what's going on there he posted a [great
+video](https://www.youtube.com/watch?v=xZuy4gBghho).
+
+I recommend you watch it because there's a lot of useful information there.
