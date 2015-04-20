@@ -9,7 +9,7 @@ Setup
 ### Prerequites
 
 There is some preambulatory stuff I install (some of it necessary for this to
-work and some of it not.) Mostly everythign is included in the 
+work and some of it not.) Mostly everything is included in the 
 [system-setup.sh](https://github.com/jaredmcateer/.files/blob/master/system-setup.sh)
 file.
 
