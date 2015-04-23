@@ -76,3 +76,4 @@ eval "$(rbenv init -)"
 # Init fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+export PATH="$HOME/.composer/vendor/bin:$PATH"

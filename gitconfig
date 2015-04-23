@@ -28,3 +28,5 @@
 	cmd = "nvim -d -u ~/.nvimrc \"$LOCAL\" \"$REMOTE\""
 [push]
 	default = simple
+[core]
+	editor = nvim

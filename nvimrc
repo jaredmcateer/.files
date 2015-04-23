@@ -21,6 +21,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'othree/html5.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'brookhong/DBGPavim'
 
 call vundle#end()
 filetype plugin indent on
@@ -83,7 +84,7 @@ augroup trailing
 augroup END
 
 " Remove trailing whitespace on save
-autocmd FileType c,cpp,java,php,js,phtml,html BufWritePre * :%s/\s\+$//e
+autocmd FileType c,cpp,java,php,js,phtml,html autocmd BufWritePre * :%s/\s\+$//e
 
 " }}}
 
@@ -153,6 +154,7 @@ iabbrev reutnr return
 noremap <F1> :checktime<cr>
 inoremap <F1> <esc>:checktime<cr>
 
+inoremap jj <esc>
 " Tabs
 nnoremap <leader>d :tabprev<cr>
 nnoremap <leader>f :tabnext<cr>
@@ -246,6 +248,8 @@ nnoremap D d$
 " Don't move on *
 nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
 
+
+set tags=tags;
 " Jumping to tags.
 "
 " Basically, <c-]> jumps to tags (like normal) and <c-\> opens the tag in a new
@@ -466,6 +470,14 @@ set foldtext=MyFoldText()
   augroup END
 
 " }}}
+" PHP {{{
+  augroup ft_php
+    au!
+    au FileType php,phtml setlocal tabstop=8
+    au FileType php,phtml setlocal shiftwidth=4
+    au FileType php,phtml setlocal softtabstop=4
+  augroup END
+" }}}
 " QuickFix {{{
 
   augroup ft_quickfix
@@ -574,8 +586,13 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
   \ --ignore .hg
   \ --ignore .DS_Store
   \ --ignore "**/*.pyc"
+  \ --ignore msribbon
   \ -g ""'
 
+" }}}
+" DBGPavim {{{
+  let g:dbgPavimBreakAtEntry = 1
+  let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-apache/istock-src/', '/data/istock/']]
 " }}}
 " DelimitMate {{{
 
@@ -676,6 +693,15 @@ let g:splice_initial_scrollbind_path = 0
 let g:splice_wrap = "nowrap"
 
 " }}}
+" Syntastic {{{
+  let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+  let g:syntastic_php_checkers = ['phplint', 'phpcs']
+  let g:syntastic_php_phpcs_args="--report=csv --standard=PSR2"
+  let g:syntastic_error_symbol = '☒'
+  let g:syntastic_warning_symbol = '⚠'
+  let g:syntastic_style_error_symbol = '✗'
+  let g:syntastic_style_warning_symbol = '❗'
+" }}}
 " }}}
 " Mini-plugins ------------------------------------------------------ {{{
 " Stuff that should probably be broken out into plugins, but hasn't proved to be
@@ -689,7 +715,7 @@ let g:splice_wrap = "nowrap"
     echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), " > ")
   endfunc
 
-  nnoremap <F7> :call SynStack()<CR>
+  nnoremap <leader><F7> :call SynStack()<CR>
 
 " }}}
 " J {{{
