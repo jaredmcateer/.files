@@ -1,0 +1,3 @@
+if [ ! -f "environment-variables" ]; then
+  cp ./environment-variables.sample ./environment-variables
+fi

@@ -1,5 +1,10 @@
 - clean: ['~']
 
+- shell:
+  - [git submodule update --init --recursive, Instaling submodules]
+  - [./fonts/install.sh]
+  - [./mkenvfile]
+
 - link:
     ~/.tmux.conf: tmux.conf
     ~/.nvim: nvim
@@ -7,7 +12,5 @@
     ~/.bashrc: bashrc
     ~/.bash_aliases: bash_aliases
     ~/.gitconfig: gitconfig
+    ~/.environment-variables: environment-variables
 
-- shell:
-  - [git submodule update --init --recursive, Instaling submodules]
-  - [./fonts/install.sh]

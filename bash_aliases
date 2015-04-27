@@ -1,3 +1,64 @@
+# My own personal navigation shortcuts, see environment-variables file for
+# variable definitions.
+c() {
+  case "$1" in
+    "code" | "base")
+      command cd $CODE_BASE_DIR
+      ;;
+    "vag" | "vagrant")
+      command cd $CODE_BASE_DIR/..
+      ;;
+    "zf")
+      command cd $ZF_BASE_DIR
+      ;;
+    "public")
+      command cd $ZF_BASE_DIR/public
+      ;;
+    "legacy")
+      command cd $LEGACY_BASE_DIR
+      ;;
+    "angular")
+      command cd $ANGULAR_DIR
+      ;;
+    "app" | "application")
+      command cd $APPLICATION_DIR
+      ;;
+    "con" | "controller")
+      command cd $CONTROLLERS_DIR
+      ;;
+    "config")
+      command cd $APPLICATION_DIR/config
+      ;;
+    "web" | "website")
+      command cd $WEBSITE_DIR
+      ;;
+    "istock")
+      command cd $ISTOCK_DIR
+      ;;
+    "unit" | "unittest")
+      command cd $UNITTEST_DIR
+      ;;
+    "uweb" | "uwebsite")
+      command cd $UNITTEST_WEBSITE_DIR
+      ;;
+    "uistock")
+      command cd $UNITTEST_ISTOCK_DIR
+      ;;
+    "apache")
+      command cd /etc/apache2/
+      ;;
+    "nginx")
+      command cd /etc/nginx/
+      ;;
+    "php")
+      command cd /etc/php5/
+      ;;
+    "logs")
+      command cd /etc/var/logs
+      ;;
+  esac
+}
+#
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
 test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
