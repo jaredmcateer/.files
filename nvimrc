@@ -27,6 +27,7 @@ call vundle#end()
 filetype plugin indent on
 " }}}
 " Basic Options ----------------------------------------------------- {{{
+set nocompatible
 set encoding=utf-8
 set modelines=0
 set autoindent
@@ -220,11 +221,18 @@ nnoremap <leader>bu :PluginUpdate<cr>
 nnoremap <leader>bc :PluginClean<cr>
 " }}}
 " Quick Editing ----------------------------------------------------- {{{
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>eg :vsplit ~/.gitconfig<cr>
-nnoremap <leader>eb :vsplit ~/.bashrc<cr>
-nnoremap <leader>ea :vsplit ~/.bash_aliases<cr>
-nnoremap <leader>et :vsplit ~/.tmux.conf<cr>
+fu! OpenInSplitIfBufferDirty(file)
+    if line('$') == 1 && getline(1) == ''
+        exec 'e' a:file
+    else
+        exec 'vsp' a:file
+    endif
+endfu
+nnoremap <leader>ev :call OpenInSplitIfBufferDirty($MYVIMRC)<cr>
+nnoremap <leader>eg :call OpenInSplitIfBufferDirty(~/.gitconfig)<cr>
+nnoremap <leader>eb :call OpenInSplitIfBufferDirty(~/.bashrc)<cr>
+nnoremap <leader>ea :call OpenInSplitIfBufferDirty(~/.bash_aliases)<cr>
+nnoremap <leader>et :call OpenInSplitIfBufferDirty(~/.tmux.conf)<cr>
 
 " }}}
 " Searching and movement -------------------------------------------- {{{
@@ -300,6 +308,10 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
+" Open new split
+noremap <leader>v <C-w>v
+noremap <leader>s <C-w>s
+
 if has('nvim')
   tnoremap <C-h> <c-\><c-n><C-w>h
   tnoremap <C-j> <c-\><c-n><C-w>j
@@ -307,8 +319,6 @@ if has('nvim')
   tnoremap <C-l> <c-\><c-n><C-w>l
   au WinEnter *term://* call feedkeys('i')
 endif
-
-noremap <leader>v <C-w>v
 
 " }}}
 " List navigation {{{
