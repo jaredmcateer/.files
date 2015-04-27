@@ -5,17 +5,14 @@ mkdir ~/bin
 echo "export PATH=$HOME/bin:$PATH"
 
 # Standard stuff & common dependencies for building stuff
-sudo apt-get install python-pip aptitude htop tmux curl git silversearcher-ag zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev imagemagick graphicsmagick-imagemagick-compat python-dev cmake
+sudo apt-get install -y python-pip aptitude htop tmux curl git silversearcher-ag xsel zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev imagemagick graphicsmagick-imagemagick-compat python-dev cmake
 
 # Google Chrome PPA
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
 
-# Neovim PPA
-sudo add-apt-repository ppa:neovim-ppa/unstable
-
-sudo apt-get update
-sudo apt-get install google-chrome-stable
+sudo apt-get -y update
+sudo apt-get -y install google-chrome-stable
 sudo pip install neovim
 
 # FZF (like ctrl-p for bash)
@@ -30,6 +27,8 @@ source ~/.bashrc
 
 # Install iojs (better nodejs) and some global executables
 nvm install $NODE_VERSION
+nvm use $NODE_VERSION
+echo "nvm use $NODE_VERSION" >> ~/.bashrc
 npm install -g jshint jscs grunt-cli
 
 # Ruby version manager
