@@ -1,61 +1,27 @@
 # My own personal navigation shortcuts, see environment-variables file for
 # variable definitions.
-c() {
+cto() {
   case "$1" in
-    "code" | "base")
-      command cd $CODE_BASE_DIR
-      ;;
-    "vag" | "vagrant")
-      command cd $CODE_BASE_DIR/..
-      ;;
-    "zf")
-      command cd $ZF_BASE_DIR
-      ;;
-    "public")
-      command cd $ZF_BASE_DIR/public
-      ;;
-    "legacy")
-      command cd $LEGACY_BASE_DIR
-      ;;
-    "angular")
-      command cd $ANGULAR_DIR
-      ;;
-    "app" | "application")
-      command cd $APPLICATION_DIR
-      ;;
-    "con" | "controller")
-      command cd $CONTROLLERS_DIR
-      ;;
-    "config")
-      command cd $APPLICATION_DIR/config
-      ;;
-    "web" | "website")
-      command cd $WEBSITE_DIR
-      ;;
-    "istock")
-      command cd $ISTOCK_DIR
-      ;;
-    "unit" | "unittest")
-      command cd $UNITTEST_DIR
-      ;;
-    "uweb" | "uwebsite")
-      command cd $UNITTEST_WEBSITE_DIR
-      ;;
-    "uistock")
-      command cd $UNITTEST_ISTOCK_DIR
-      ;;
-    "apache")
-      command cd /etc/apache2/
-      ;;
-    "nginx")
-      command cd /etc/nginx/
-      ;;
-    "php")
-      command cd /etc/php5/
-      ;;
-    "logs")
-      command cd /etc/var/logs
-      ;;
+    "code" | "base")       cd $CODE_BASE_DIR ;;
+    "vag" | "vagrant")     cd $CODE_BASE_DIR/..  ;;
+    "zf")                  cd $ZF_BASE_DIR ;;
+    "public")              cd $ZF_BASE_DIR/public ;;
+    "legacy")              cd $LEGACY_BASE_DIR ;;
+    "angular")             cd $ANGULAR_DIR ;;
+    "app" | "application") cd $APPLICATION_DIR ;;
+    "con" | "controller")  cd $CONTROLLERS_DIR ;;
+    "config")              cd $APPLICATION_DIR/config ;;
+    "web" | "website")     cd $WEBSITE_DIR ;;
+    "istock")              cd $ISTOCK_DIR ;;
+    "unit" | "unittest")   cd $UNITTEST_DIR ;;
+    "uweb" | "uwebsite")   cd $UNITTEST_WEBSITE_DIR ;;
+    "uistock")             cd $UNITTEST_ISTOCK_DIR ;;
+    "files")               cls $HOME/.files ;;
+    "apache")              cls /etc/apache2/ ;;
+    "nginx")               cls /etc/nginx/ ;;
+    "php")                 cls /etc/php5/ ;;
+    "logs")                cls /var/log ;;
+    *)                     cd $1 ;;
   esac
 }
 #

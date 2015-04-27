@@ -3,6 +3,36 @@ if [ -f ~/.environment-variables ]; then
   source ~/.environment-variables;
 fi
 
+# Fix terminal colors
+if [ "$TERM" = "xterm" ]; then
+  if [ -z "$COLORTERM" ]; then
+    if [ -z "$XTERM_VERSION" ]; then
+      echo "Warning: Terminal wrongly calling itself 'xterm'."
+    else
+      case "$XTERM_VERSION" in
+        "XTerm(256)") TERM="xterm-256color" ;;
+        "XTerm(88)") TERM="xterm-88color" ;;
+        "XTerm") ;;
+        *)
+          echo "Warning: Unrecognized XTERM_VERSION: $XTERM_VERSION"
+          ;;
+      esac
+    fi
+  else
+    case "$COLORTERM" in
+      gnome-terminal)
+        # Those crafty Gnome folks require you to check COLORTERM,
+        # But don't allow you to just *favour* the setting over TERM.
+        # Instead you need to compare it and perform guesses based 
+        # upon the value. This is, perhaps too simplistic.
+        TERM="xterm-256color"
+        ;;
+      *)
+        echo "Warning: Unrecognized COLORTERM: $COLORTERM"
+        ;;
+    esac
+  fi
+fi
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
