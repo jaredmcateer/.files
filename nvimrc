@@ -22,6 +22,8 @@ Plugin 'othree/html5.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'brookhong/DBGPavim'
+Plugin 'tmux-plugins/vim-tmux'
+Bundle 'edkolev/tmuxline.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -229,10 +231,10 @@ fu! OpenInSplitIfBufferDirty(file)
     endif
 endfu
 nnoremap <leader>ev :call OpenInSplitIfBufferDirty($MYVIMRC)<cr>
-nnoremap <leader>eg :call OpenInSplitIfBufferDirty(~/.gitconfig)<cr>
-nnoremap <leader>eb :call OpenInSplitIfBufferDirty(~/.bashrc)<cr>
-nnoremap <leader>ea :call OpenInSplitIfBufferDirty(~/.bash_aliases)<cr>
-nnoremap <leader>et :call OpenInSplitIfBufferDirty(~/.tmux.conf)<cr>
+nnoremap <leader>eg :call OpenInSplitIfBufferDirty("~/.gitconfig")<cr>
+nnoremap <leader>eb :call OpenInSplitIfBufferDirty("~/.bashrc")<cr>
+nnoremap <leader>ea :call OpenInSplitIfBufferDirty("~/.bash_aliases")<cr>
+nnoremap <leader>et :call OpenInSplitIfBufferDirty("~/.tmux.conf")<cr>
 
 " }}}
 " Searching and movement -------------------------------------------- {{{
@@ -367,7 +369,7 @@ endfunction " }}}
 set foldtext=MyFoldText()
 " }}}
 " File-type specific ------------------------------------------------ {{{
-" CSS & Sass {{{
+"   CSS & Sass {{{
 
   augroup ft_css
     au!
@@ -402,8 +404,8 @@ set foldtext=MyFoldText()
     au BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
   augroup END
 
-" }}}
-" HTML {{{
+"   }}}
+"   HTML {{{
 
   augroup ft_html
     au!
@@ -417,8 +419,8 @@ set foldtext=MyFoldText()
     au FileType html,phtml nnoremap <buffer> <localleader>= Vat=
   augroup END
 
-" }}}
-" Javascript {{{
+"   }}}
+"   Javascript {{{
 
   augroup ft_javascript
     au!
@@ -437,8 +439,8 @@ set foldtext=MyFoldText()
     au FileType javascript vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
   augroup END
 
-" }}}
-" Markdown {{{
+"   }}}
+"   Markdown {{{
 
   augroup ft_markdown
     au!
@@ -455,8 +457,8 @@ set foldtext=MyFoldText()
     au Filetype markdown vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
   augroup END
 
-  " }}}
-" Nginx {{{
+"   }}}
+"   Nginx {{{
 
   augroup ft_nginx
     au!
@@ -469,8 +471,8 @@ set foldtext=MyFoldText()
     au FileType nginx setlocal foldmethod=marker foldmarker={,}
   augroup END
 
-" }}}
-" Puppet {{{
+"   }}}
+"   Puppet {{{
 
   augroup ft_puppet
     au!
@@ -479,24 +481,24 @@ set foldtext=MyFoldText()
     au Filetype puppet setlocal foldmarker={,}
   augroup END
 
-" }}}
-" PHP {{{
+"   }}}
+"   PHP {{{
   augroup ft_php
     au!
     au FileType php,phtml setlocal tabstop=8
     au FileType php,phtml setlocal shiftwidth=4
     au FileType php,phtml setlocal softtabstop=4
   augroup END
-" }}}
-" QuickFix {{{
+"   }}}
+"   QuickFix {{{
 
   augroup ft_quickfix
     au!
     au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap tw=0
   augroup END
 
-" }}}
-" Ruby {{{
+"   }}}
+"   Ruby {{{
 
   augroup ft_ruby
     au!
@@ -504,8 +506,8 @@ set foldtext=MyFoldText()
     au BufRead,BufNewFile Capfile setlocal filetype=ruby
   augroup END
 
-" }}}
-" Standard In {{{
+"   }}}
+"   Standard In {{{
 
   augroup ft_stdin
     au!
@@ -514,16 +516,16 @@ set foldtext=MyFoldText()
     au StdinReadPost * :set buftype=nofile
   augroup END
 
-" }}}
-" Vagrant {{{
+"   }}}
+"   Vagrant {{{
 
   augroup ft_vagrant
     au!
     au BufRead,BufNewFile Vagrantfile set ft=ruby
   augroup END
 
-" }}}
-" Vim {{{
+"   }}}
+"   Vim {{{
 
   augroup ft_vim
     au!
@@ -533,8 +535,8 @@ set foldtext=MyFoldText()
     au BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
   augroup END
 
-" }}}
-" YAML {{{
+"   }}}
+"   YAML {{{
 
   augroup ft_yaml
     au!
@@ -542,8 +544,8 @@ set foldtext=MyFoldText()
     au FileType yaml set shiftwidth=2
   augroup END
 
-" }}}
-" XML {{{
+"   }}}
+"   XML {{{
 
   augroup ft_xml
     au!
@@ -557,21 +559,21 @@ set foldtext=MyFoldText()
     au FileType xml nnoremap <buffer> <localleader>= Vat=
   augroup END
 
-" }}}
+"   }}}
 " }}}
 " Plugin settings --------------------------------------------------- {{{
-" Autoclose {{{
+"   Autoclose {{{
 
 nmap <Leader>x <Plug>ToggleAutoCloseMappings
 
-" }}}
-" Commentary {{{
+"   }}}
+"   Commentary {{{
 
 nmap <leader>c <Plug>CommentaryLine
 xmap <leader>c <Plug>Commentary
 
-" }}}
-" Ctrl-P {{{
+"   }}}
+"   Ctrl-P {{{
 
 let g:ctrlp_jump_to_buffer = 0
 let g:ctrlp_working_path_mode = 0
@@ -601,15 +603,15 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
   \ --ignore test_out
   \ -g ""'
 
-" }}}
-" DBGPavim {{{
+"   }}}
+"   DBGPavim {{{
   let g:dbgPavimBreakAtEntry = 1
   let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-apache/istock-src/', '/data/istock/']]
-" }}}
-" DelimitMate {{{
+"   }}}
+"   DelimitMate {{{
 
-" }}}
-" Fugitive {{{
+"   }}}
+"   Fugitive {{{
 
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gs :Gstatus<cr>
@@ -636,19 +638,19 @@ nnoremap <leader>H V:Gbrowse<cr>
 vnoremap <leader>u :Gbrowse @upstream<cr>
 nnoremap <leader>u V:Gbrowse @upstream<cr>
 
-" }}}
-" HTML5 {{{
+"   }}}
+"   HTML5 {{{
 
 let g:event_handler_attributes_complete = 0
 let g:rdfa_attributes_complete = 0
 let g:microdata_attributes_complete = 0
 let g:atia_attributes_complete = 0
 
-" }}}
-" Javascript Lib Syntax {{{
+"   }}}
+"   Javascript Lib Syntax {{{
   let g:used_javascript_libs = 'underscore,jquery,angular,jasmine'
-" }}}
-" NERD Tree {{{
+"   }}}
+"   NERD Tree {{{
 
 noremap  <F2> :NERDTreeToggle<cr>
 inoremap <F2> <esc>:NERDTreeToggle<cr>
@@ -677,11 +679,11 @@ let NERDTreeChDirMode = 2
 let NERDTreeQuitOnOpen = 1
 let NERDTreeMapJumpFirstChild = 'gK'
 
-" }}}
-" Airline {{{
+"   }}}
+"   Airline {{{
   let g:airline_powerline_fonts = 1
-" }}}
-" Splice {{{
+"   }}}
+"   Splice {{{
 
 let g:splice_prefix = "-"
 
@@ -704,22 +706,23 @@ let g:splice_initial_scrollbind_path = 0
 
 let g:splice_wrap = "nowrap"
 
-" }}}
-" Syntastic {{{
+"   }}}
+"   Syntastic {{{
   let g:syntastic_javascript_checkers = ['jshint', 'jscs']
-  let g:syntastic_php_checkers = ['phplint', 'phpcs']
+  let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
   let g:syntastic_php_phpcs_args="--report=csv --standard=PSR2"
   let g:syntastic_error_symbol = '☒'
   let g:syntastic_warning_symbol = '⚠'
   let g:syntastic_style_error_symbol = '✗'
   let g:syntastic_style_warning_symbol = '❗'
-" }}}
+  let g:syntastic_aggregate_errors = 1
+"   }}}
 " }}}
 " Mini-plugins ------------------------------------------------------ {{{
 " Stuff that should probably be broken out into plugins, but hasn't proved to be
 " worth the time to do so just yet.
 
-" Synstack {{{
+"   Synstack {{{
 
   " Show the stack of syntax hilighting classes affecting whatever is under the
   " cursor.
@@ -729,8 +732,8 @@ let g:splice_wrap = "nowrap"
 
   nnoremap <leader><F7> :call SynStack()<CR>
 
-" }}}
-" J {{{
+"   }}}
+"   J {{{
 
 function! s:JumpTo(dest)
   call system("tmux split-window -h 'j " . a:dest . "; and myctags &; and vim .'")
@@ -738,8 +741,8 @@ endfunction
 
 command! -nargs=1 J call s:JumpTo(<f-args>)
 
-" }}}
-" Indent Guides {{{
+"   }}}
+"   Indent Guides {{{
 
   let g:indentguides_state = 0
   function! IndentGuides() " {{{
@@ -754,8 +757,8 @@ command! -nargs=1 J call s:JumpTo(<f-args>)
   hi def IndentGuides guibg=#303030 ctermbg=234
   nnoremap <leader>I :call IndentGuides()<cr>
 
-" }}}
-" Block Colors {{{
+"   }}}
+"   Block Colors {{{
 
   let g:blockcolor_state = 0
   function! BlockColor() " {{{
@@ -787,13 +790,14 @@ command! -nargs=1 J call s:JumpTo(<f-args>)
   " }}}
   nnoremap <leader>B :call BlockColor()<cr>
 
-" }}}
-" Pulse Line {{{
+"   }}}
+"   Pulse Line {{{
 
   function! s:Pulse() " {{{
     redir => old_hi
     silent execute 'hi CursorLine'
     redir END
+    let old_clsetting = &cursorline
     let old_hi = split(old_hi, '\n')[0]
     let old_hi = substitute(old_hi, 'xxx', '', '')
 
@@ -803,21 +807,25 @@ command! -nargs=1 J call s:JumpTo(<f-args>)
     let end = steps * width
     let color = 233
 
+    set cursorline
     for i in range(start, end, width)
-      execute "hi CursorLine ctermbg=" . (color + i)
+      execute "hi CursorLine ctermfg=fg ctermbg=" . (color + i)
       redraw
       sleep 6m
     endfor
     for i in range(end, start, -1 * width)
-      execute "hi CursorLine ctermbg=" . (color + i)
+      execute "hi CursorLine ctermfg=fg ctermbg=" . (color + i)
       redraw
       sleep 6m
     endfor
 
     execute 'hi ' . old_hi
+    if old_clsetting == 0
+      set nocursorline
+    endif
   endfunction " }}}
   command! -nargs=0 Pulse call s:Pulse()
 
-" }}}
+"   }}}
 
 " }}}
