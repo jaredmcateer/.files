@@ -23,7 +23,8 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'brookhong/DBGPavim'
 Plugin 'tmux-plugins/vim-tmux'
-Bundle 'edkolev/tmuxline.vim'
+Plugin 'edkolev/tmuxline.vim'
+Plugin 'evanmiller/nginx-vim-syntax'
 
 call vundle#end()
 filetype plugin indent on
@@ -605,13 +606,16 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
 
 "   }}}
 "   DBGPavim {{{
-  let g:dbgPavimBreakAtEntry = 1
-  let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-apache/istock-src/', '/data/istock/']]
+  let g:dbgPavimBreakAtEntry = 0
+  let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-nginx/istock-src/', '/data/istock/']]
 "   }}}
 "   DelimitMate {{{
 
 "   }}}
 "   Fugitive {{{
+
+" for some reason diff is opening in horizontal split instead of vertical
+set diffopt+=vertical
 
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gs :Gstatus<cr>
@@ -641,10 +645,10 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
 "   }}}
 "   HTML5 {{{
 
-let g:event_handler_attributes_complete = 0
-let g:rdfa_attributes_complete = 0
-let g:microdata_attributes_complete = 0
-let g:atia_attributes_complete = 0
+  let g:event_handler_attributes_complete = 0
+  let g:rdfa_attributes_complete = 0
+  let g:microdata_attributes_complete = 0
+  let g:atia_attributes_complete = 0
 
 "   }}}
 "   Javascript Lib Syntax {{{
@@ -652,32 +656,32 @@ let g:atia_attributes_complete = 0
 "   }}}
 "   NERD Tree {{{
 
-noremap  <F2> :NERDTreeToggle<cr>
-inoremap <F2> <esc>:NERDTreeToggle<cr>
-noremap  <F3> :NERDTreeFind<cr>
-inoremap <F3> <esc>:NERDTreeFind<cr>
+  noremap  <leader><F2> :NERDTreeToggle<cr>
+  inoremap <leader><F2> <esc>:NERDTreeToggle<cr>
+  noremap  <leader><F3> :NERDTreeFind<cr>
+  inoremap <leader><F3> <esc>:NERDTreeFind<cr>
 
-augroup ps_nerdtree
-    au!
+  augroup ps_nerdtree
+      au!
 
-    au Filetype nerdtree setlocal nolist
-    au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
-    au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
-    " au Filetype nerdtree nnoremap <buffer> K :q<cr>
-augroup END
+      au Filetype nerdtree setlocal nolist
+      au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
+      au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
+      " au Filetype nerdtree nnoremap <buffer> K :q<cr>
+  augroup END
 
-let NERDTreeHighlightCursorline = 1
-let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
-                    \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
-                    \ '.*\.o$', 'db.db', 'tags.bak', '.*\.pdf$', '.*\.mid$',
-                    \ '.*\.midi$']
+  let NERDTreeHighlightCursorline = 1
+  let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
+                      \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
+                      \ '.*\.o$', 'db.db', 'tags.bak', '.*\.pdf$', '.*\.mid$',
+                      \ '.*\.midi$']
 
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-let NERDChristmasTree = 1
-let NERDTreeChDirMode = 2
-let NERDTreeQuitOnOpen = 1
-let NERDTreeMapJumpFirstChild = 'gK'
+  let NERDTreeMinimalUI = 1
+  let NERDTreeDirArrows = 1
+  let NERDChristmasTree = 1
+  let NERDTreeChDirMode = 2
+  let NERDTreeQuitOnOpen = 1
+  let NERDTreeMapJumpFirstChild = 'gK'
 
 "   }}}
 "   Airline {{{
@@ -685,26 +689,26 @@ let NERDTreeMapJumpFirstChild = 'gK'
 "   }}}
 "   Splice {{{
 
-let g:splice_prefix = "-"
+  let g:splice_prefix = "-"
 
-let g:splice_initial_mode = "grid"
+  let g:splice_initial_mode = "grid"
 
-let g:splice_initial_layout_grid = 0
-let g:splice_initial_layout_loupe = 0
-let g:splice_initial_layout_compare = 0
-let g:splice_initial_layout_path = 0
+  let g:splice_initial_layout_grid = 0
+  let g:splice_initial_layout_loupe = 0
+  let g:splice_initial_layout_compare = 0
+  let g:splice_initial_layout_path = 0
 
-let g:splice_initial_diff_grid = 1
-let g:splice_initial_diff_loupe = 0
-let g:splice_initial_diff_compare = 1
-let g:splice_initial_diff_path = 0
+  let g:splice_initial_diff_grid = 1
+  let g:splice_initial_diff_loupe = 0
+  let g:splice_initial_diff_compare = 1
+  let g:splice_initial_diff_path = 0
 
-let g:splice_initial_scrollbind_grid = 0
-let g:splice_initial_scrollbind_loupe = 0
-let g:splice_initial_scrollbind_compare = 0
-let g:splice_initial_scrollbind_path = 0
+  let g:splice_initial_scrollbind_grid = 0
+  let g:splice_initial_scrollbind_loupe = 0
+  let g:splice_initial_scrollbind_compare = 0
+  let g:splice_initial_scrollbind_path = 0
 
-let g:splice_wrap = "nowrap"
+  let g:splice_wrap = "nowrap"
 
 "   }}}
 "   Syntastic {{{

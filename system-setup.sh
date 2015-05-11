@@ -5,7 +5,11 @@ mkdir ~/bin
 echo "export PATH=$HOME/bin:$PATH"
 
 # Standard stuff & common dependencies for building stuff
-sudo apt-get install -y python-pip aptitude htop tmux curl git silversearcher-ag xsel zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev imagemagick graphicsmagick-imagemagick-compat python-dev cmake
+sudo apt-get install -y python-pip aptitude htop tmux curl git silversearcher-ag \
+  xsel zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev \
+  libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev \
+  python-software-properties libffi-dev imagemagick libnss3-tools \
+  graphicsmagick-imagemagick-compat python-dev cmake
 
 # Google Chrome PPA
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -

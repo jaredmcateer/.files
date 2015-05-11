@@ -3,9 +3,10 @@
 cto() {
   case "$1" in
     "code" | "base")       cd $CODE_BASE_DIR ;;
-    "vag" | "vagrant")     cd $CODE_BASE_DIR/..  ;;
+    "vag" | "vagrant")     cd $VAGRANT_DIR  ;;
     "zf")                  cd $ZF_BASE_DIR ;;
     "public")              cd $ZF_BASE_DIR/public ;;
+    "sass")                cd $SASS_DIR ;;
     "legacy")              cd $LEGACY_BASE_DIR ;;
     "angular")             cd $ANGULAR_DIR ;;
     "app" | "application") cd $APPLICATION_DIR ;;
@@ -24,6 +25,7 @@ cto() {
     *)                     cd $1 ;;
   esac
 }
+complete -W "code base vagrant zf public sass legacy angular application controller config website istock unittest uwebsite uistock files apache nginx php logs" cto
 #
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
