@@ -25,6 +25,7 @@ Plugin 'brookhong/DBGPavim'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'evanmiller/nginx-vim-syntax'
+Plugin 'majutsushi/tagbar'
 
 call vundle#end()
 filetype plugin indent on
@@ -720,6 +721,9 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
   let g:syntastic_style_error_symbol = '✗'
   let g:syntastic_style_warning_symbol = '❗'
   let g:syntastic_aggregate_errors = 1
+"   }}}
+"   TagBar {{{
+  nmap <leader><F4> :TagbarToggle<CR>
 "   }}}
 " }}}
 " Mini-plugins ------------------------------------------------------ {{{
