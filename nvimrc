@@ -59,6 +59,7 @@ set autoread
 set shiftround
 set title
 set colorcolumn=80,120
+set conceallevel=2
 
 " Don't try to highlight lines longer than 400 chars
 set synmaxcol=400
@@ -150,6 +151,17 @@ colorscheme atom-dark-256
 " }}}
 " }}}
 " Abbreviations ----------------------------------------------------- {{{
+function! EatChar(pat)
+    let c = nr2char(getchar(0))
+    return (c =~ a:pat) ? '' : c
+endfunction
+function! MakeSpacelessIabbrev(from, to)
+    execute "iabbrev <silent> ".a:from." ".a:to."<C-R>=EatChar('\\s')<CR>"
+endfunction
+function! MakeSpacelessBufferIabbrev(from, to)
+    execute "iabbrev <silent> <buffer> ".a:from." ".a:to."<C-R>=EatChar('\\s')<CR>"
+endfunction
+
 iabbrev funciton function
 iabbrev functoin function
 iabbrev retrun return
@@ -564,6 +576,9 @@ set foldtext=MyFoldText()
 "   }}}
 " }}}
 " Plugin settings --------------------------------------------------- {{{
+"   Airline {{{
+  let g:airline_powerline_fonts = 1
+"   }}}
 "   Autoclose {{{
 
 nmap <Leader>x <Plug>ToggleAutoCloseMappings
@@ -608,7 +623,8 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
 "   }}}
 "   DBGPavim {{{
   let g:dbgPavimBreakAtEntry = 0
-  let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-nginx/istock-src/', '/data/istock/']]
+  "let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-nginx/istock-src/', '/data/istock/']]
+  let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-apache/istock-src/', '/data/istock/']]
 "   }}}
 "   DelimitMate {{{
 
@@ -685,8 +701,16 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
   let NERDTreeMapJumpFirstChild = 'gK'
 
 "   }}}
-"   Airline {{{
-  let g:airline_powerline_fonts = 1
+"   Pangloss Javascript {{{
+  let g:javascript_conceal_function   = "ƒ"
+  let g:javascript_conceal_null       = "ø"
+  let g:javascript_conceal_this       = "@"
+  let g:javascript_conceal_return     = "⇚"
+  let g:javascript_conceal_undefined  = "¿"
+  let g:javascript_conceal_NaN        = "ℕ"
+  let g:javascript_conceal_prototype  = "¶"
+  let g:javascript_conceal_static     = "•"
+  let g:javascript_conceal_super      = "Ω"
 "   }}}
 "   Splice {{{
 
