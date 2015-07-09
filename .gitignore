@@ -2,3 +2,4 @@ nvim/bundle
 nvim/tmp
 environment-variables
 tmux/plugins
+tmux/resurect

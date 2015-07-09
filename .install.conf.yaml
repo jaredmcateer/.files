@@ -14,4 +14,5 @@
     ~/.bash_aliases: bash_aliases
     ~/.gitconfig: gitconfig
     ~/.environment-variables: environment-variables
+    ~/.agignore: agignore
 

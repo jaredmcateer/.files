@@ -19,13 +19,15 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'sjl/splice.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'othree/html5.vim'
-Plugin 'pangloss/vim-javascript'
+Plugin 'othree/yajs.vim'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'brookhong/DBGPavim'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'evanmiller/nginx-vim-syntax'
 Plugin 'majutsushi/tagbar'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'digitaltoad/vim-jade'
 
 call vundle#end()
 filetype plugin indent on
@@ -118,7 +120,7 @@ augroup END
 
 " }}}
 " Tabs, spaces, wrapping {{{
-set tabstop=4
+set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
@@ -166,6 +168,7 @@ iabbrev funciton function
 iabbrev functoin function
 iabbrev retrun return
 iabbrev reutnr return
+cabbr <expr> %% expand('%:p:h')
 " }}}
 " Convience mappings ------------------------------------------------ {{{
 noremap <F1> :checktime<cr>
@@ -208,7 +211,7 @@ nnoremap <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> t
 inoremap <C-u> <esc>mzgUiw`za
 
 " Keep the cursor in place while joining lines
-nnoremap J mzJ`z<F37>
+nnoremap J mzJ`z
 
 " Split line (sister to [J]oin lines)
 " The normal use of S is covered by cc, so don't worry about shadowing it.
@@ -329,6 +332,7 @@ noremap <leader>v <C-w>v
 noremap <leader>s <C-w>s
 
 if has('nvim')
+  tnoremap <Esc> <c-\><c-n>
   tnoremap <C-h> <c-\><c-n><C-w>h
   tnoremap <C-j> <c-\><c-n><C-w>j
   tnoremap <C-k> <c-\><c-n><C-w>k
@@ -439,13 +443,17 @@ set foldtext=MyFoldText()
   augroup ft_javascript
     au!
 
+    " Add es5 extension
+    au BufNewFile,BufRead *.es6 setlocal filetype=javascript
+
     au FileType javascript setlocal foldmethod=marker
     au FileType javascript setlocal foldmarker={,}
     au FileType javascript call MakeSpacelessBufferIabbrev('clog', 'console.log();<left><left>')
 
     " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
     " positioned inside of them AND the following code doesn't get unfolded.
-    au Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+    au Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
+    au Filetype javascript inoremap <buffer> [<cr> []<left><cr><space><space>.<cr><esc>kA<bs>
     " }
 
     " Prettify a hunk of JSON with <localleader>p
@@ -745,6 +753,16 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
   let g:syntastic_style_error_symbol = '✗'
   let g:syntastic_style_warning_symbol = '❗'
   let g:syntastic_aggregate_errors = 1
+
+  nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
+  function! ToggleErrors()
+    let old_last_winnr = winnr('$')
+    lclose
+    if old_last_winnr == winnr('$')
+      " Nothing was closed, open syntastic error location panel
+      Errors
+    endif
+  endfunction
 "   }}}
 "   TagBar {{{
   nmap <leader><F4> :TagbarToggle<CR>

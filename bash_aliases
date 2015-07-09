@@ -59,9 +59,9 @@ alias reboot='sudo reboot'
 
 # Apt-get shortcuts
 alias update='sudo apt-get update'
-alias upgrade='sudo apt-get upgrade'
+alias upgrade='sudo apt-get -y upgrade'
 alias upup='update && upgrade'
-alias install='sudo apt-get install'
+alias install='sudo apt-get -y install'
 alias search='apt-cache search'
 
 # Audio volume
