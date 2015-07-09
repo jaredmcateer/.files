@@ -15,4 +15,4 @@
     ~/.gitconfig: gitconfig
     ~/.environment-variables: environment-variables
     ~/.agignore: agignore
-
+    ~/.nvmrc: nvmrc

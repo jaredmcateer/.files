@@ -32,8 +32,7 @@ source ~/.bashrc
 # Install iojs (better nodejs) and some global executables
 nvm install $NODE_VERSION
 nvm use $NODE_VERSION
-echo "nvm use $NODE_VERSION" >> ~/.bashrc
-npm install -g jshint jscs grunt-cli
+npm install -g jshint jscs grunt-cli gulp eslint
 
 # Ruby version manager
 git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
