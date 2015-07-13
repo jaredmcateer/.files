@@ -1,4 +1,6 @@
 nvim/bundle
+nvim/plugged
+nvim/autoload/plug.vim
 nvim/tmp
 environment-variables
 tmux/plugins

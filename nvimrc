@@ -1,38 +1,35 @@
 " Setup Vundle plugins ---------------------------------------------- {{{
-filetype off
-set rtp+=~/.nvim/bundle/Vundle.vim
-call vundle#begin('~/.nvim/bundle')
+call plug#begin('~/.nvim/plugged')
 
-Plugin 'gmarik/Vundle.vim'
+Plug 'jaredmcateer/vim-atom-dark'
+Plug 'tpope/vim-surround'
+Plug 'Townk/vim-autoclose'
+Plug 'tpope/vim-commentary'
+Plug 'kien/ctrlp.vim'
+Plug 'Raimondi/delimitMate'
+Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'bling/vim-airline'
+"Plug 'Valloric/YouCompleteMe'
+Plug 'sjl/splice.vim'
+Plug 'scrooloose/syntastic'
+Plug 'othree/html5.vim'
+Plug 'othree/yajs.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'brookhong/DBGPavim'
+Plug 'tmux-plugins/vim-tmux'
+Plug 'edkolev/tmuxline.vim'
+Plug 'evanmiller/nginx-vim-syntax'
+Plug 'majutsushi/tagbar'
+Plug 'kchmck/vim-coffee-script'
+Plug 'digitaltoad/vim-jade'
+"Plug 'Shougo/deoplete.nvim'
+call plug#end()
 
-Plugin 'jaredmcateer/vim-atom-dark'
-Plugin 'tpope/vim-surround.git'
-Plugin 'Townk/vim-autoclose'
-Plugin 'tpope/vim-commentary'
-Plugin 'kien/ctrlp.vim'
-Plugin 'Raimondi/delimitMate'
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'bling/vim-airline'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'sjl/splice.vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'othree/html5.vim'
-Plugin 'othree/yajs.vim'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'brookhong/DBGPavim'
-Plugin 'tmux-plugins/vim-tmux'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'evanmiller/nginx-vim-syntax'
-Plugin 'majutsushi/tagbar'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'digitaltoad/vim-jade'
-
-call vundle#end()
-filetype plugin indent on
 " }}}
 " Basic Options ----------------------------------------------------- {{{
+filetype plugin indent on
 set nocompatible
 set encoding=utf-8
 set modelines=0
@@ -149,7 +146,11 @@ endif
 " }}}
 " Color Scheme {{{
 syntax on
-colorscheme atom-dark-256
+try
+  colorscheme atom-dark-256
+catch /^Vim\%((\a\+)\)\=:E185/
+endtry
+
 " }}}
 " }}}
 " Abbreviations ----------------------------------------------------- {{{
@@ -235,9 +236,9 @@ command! -bang WQ wq<bang>
 nnoremap <leader>p :set paste!<cr>
 
 " Vundle Keys
-nnoremap <leader>bi :PluginInstall<cr>
-nnoremap <leader>bu :PluginUpdate<cr>
-nnoremap <leader>bc :PluginClean<cr>
+nnoremap <leader>bi :PlugInstall<cr>
+nnoremap <leader>bu :PlugUpdate<cr>
+nnoremap <leader>bc :PlugClean<cr>
 " }}}
 " Quick Editing ----------------------------------------------------- {{{
 fu! OpenInSplitIfBufferDirty(file)
@@ -637,6 +638,9 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
 "   DelimitMate {{{
 
 "   }}}
+"   Deoplete {{{
+  let g:deoplete#enable_at_startup = 1
+"   }}}
 "   Fugitive {{{
 
 " for some reason diff is opening in horizontal split instead of vertical
@@ -766,6 +770,17 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
 "   }}}
 "   TagBar {{{
   nmap <leader><F4> :TagbarToggle<CR>
+"   }}}
+"   YouCompleteMe {{{
+"  function BuildYCM(info)
+"    " info is a dictionary of 3 fields
+"    " name: name of plugin
+"    " status: 'installed', 'updated', 'unchanged'
+"    " force: set on PlugInstall! or PlugUpdate!
+"    if a:info.status == 'installed' || a:info.force
+"      !./install.sh
+"    endif
+"  endfunction
 "   }}}
 " }}}
 " Mini-plugins ------------------------------------------------------ {{{
