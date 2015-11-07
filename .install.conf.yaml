@@ -11,8 +11,7 @@
 - link:
     ~/.tmux.conf: tmux.conf
     ~/.tmux: tmux
-    ~/.nvim: nvim
-    ~/.nvimrc: nvimrc
+    ~/.config/nvim: nvim
     ~/.bashrc: bashrc
     ~/.bash_aliases: bash_aliases
     ~/.gitconfig: gitconfig
