@@ -137,3 +137,6 @@ extract() {
   fi 
 }
 
+pwdfor() {
+  lpass ls | ag $1 | sed -r 's/.*id: ([0-9]+).*/\1/g' | xargs lpass show
+}

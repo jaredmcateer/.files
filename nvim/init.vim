@@ -11,20 +11,16 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'bling/vim-airline'
-"Plug 'Valloric/YouCompleteMe'
-Plug 'sjl/splice.vim'
 Plug 'scrooloose/syntastic'
-Plug 'othree/html5.vim'
-Plug 'othree/yajs.vim'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'brookhong/DBGPavim'
+Plug 'joonty/vdebug', { 'branch': 'version-2.x' }
 Plug 'tmux-plugins/vim-tmux'
 Plug 'edkolev/tmuxline.vim'
 Plug 'evanmiller/nginx-vim-syntax'
 Plug 'majutsushi/tagbar'
-Plug 'kchmck/vim-coffee-script'
-Plug 'digitaltoad/vim-jade'
-"Plug 'Shougo/deoplete.nvim'
+Plug 'idanarye/vim-merginal'
+Plug 'evidens/vim-twig'
+Plug 'wellle/targets.vim'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 " }}}
@@ -221,6 +217,15 @@ nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 " Sudo to write
 cnoremap w!! w !sudo tee % >/dev/null
 
+" Show Highlighting groups for current word
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
 " Typos
 command! -bang E e<bang>
 command! -bang Q q<bang>
@@ -393,7 +398,7 @@ set foldtext=MyFoldText()
   augroup ft_css
     au!
     au BufNewFile,BufRead *.scss setlocal filetype=sass
-    au FileType sass,css setlocal filemarker={,}
+    au FileType sass,css setlocal foldmarker={,}
     au FileType sass,css setlocal omnifunc=csscomplete#CompleteCSS
     au FileType sass,css setlocal iskeyword+=-
 
@@ -446,6 +451,9 @@ set foldtext=MyFoldText()
 
     " Add es5 extension
     au BufNewFile,BufRead *.es6 setlocal filetype=javascript
+
+    " Add es5 extension
+    au BufNewFile,BufRead .eslintrc setlocal filetype=javascript
 
     au FileType javascript setlocal foldmethod=marker
     au FileType javascript setlocal foldmarker={,}
@@ -511,6 +519,10 @@ set foldtext=MyFoldText()
     au FileType php,phtml setlocal tabstop=8
     au FileType php,phtml setlocal shiftwidth=4
     au FileType php,phtml setlocal softtabstop=4
+    " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
+    " positioned inside of them AND the following code doesn't get unfolded.
+    au Filetype php inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+    au Filetype php inoremap <buffer> [<cr> []<left><cr><space><space><space><space>.<cr><esc>kA<bs>
   augroup END
 "   }}}
 "   QuickFix {{{
@@ -608,7 +620,7 @@ let g:ctrlp_extensions = ['tag']
 
 let g:ctrlp_map = '<leader>,'
 nnoremap <leader>. :CtrlPTag<cr>
-nnoremap <leader>E :CtrlP ../
+nnoremap <leader>E :CtrlP ../<cr>
 
 let g:ctrlp_prompt_mappings = {
 \ 'PrtSelectMove("j")':   ['<c-j>', '<down>', '<s-tab>'],
@@ -631,7 +643,7 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
 
 "   }}}
 "   DBGPavim {{{
-  let g:dbgPavimBreakAtEntry = 0
+  let g:dbgPavimBreakAtEntry = 1
   "let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-nginx/istock-src/', '/data/istock/']]
   let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-apache/istock-src/', '/data/istock/']]
 "   }}}
@@ -655,7 +667,7 @@ nnoremap <leader>gco :Gcheckout<cr>
 nnoremap <leader>gci :Gcommit<cr>
 nnoremap <leader>gm :Gmove<cr>
 nnoremap <leader>gr :Gremove<cr>
-nnoremap <leader>gl :Shell git gl -18<cr>:wincmd \|<cr>
+nnoremap <leader>gl :!git gl -18<cr>:wincmd \|<cr>
 
 augroup ft_fugitive
     au!
@@ -724,32 +736,9 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
   let g:javascript_conceal_static     = "•"
   let g:javascript_conceal_super      = "Ω"
 "   }}}
-"   Splice {{{
-
-  let g:splice_prefix = "-"
-
-  let g:splice_initial_mode = "grid"
-
-  let g:splice_initial_layout_grid = 0
-  let g:splice_initial_layout_loupe = 0
-  let g:splice_initial_layout_compare = 0
-  let g:splice_initial_layout_path = 0
-
-  let g:splice_initial_diff_grid = 1
-  let g:splice_initial_diff_loupe = 0
-  let g:splice_initial_diff_compare = 1
-  let g:splice_initial_diff_path = 0
-
-  let g:splice_initial_scrollbind_grid = 0
-  let g:splice_initial_scrollbind_loupe = 0
-  let g:splice_initial_scrollbind_compare = 0
-  let g:splice_initial_scrollbind_path = 0
-
-  let g:splice_wrap = "nowrap"
-
-"   }}}
 "   Syntastic {{{
-  let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+  "let g:syntastic_javascript_checkers = ['eslint']
+  let g:syntastic_javascript_checkers = ['jscs', 'jshint']
   let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
   let g:syntastic_php_phpcs_args="--report=csv --standard=PSR2"
   let g:syntastic_error_symbol = '☒'
@@ -781,6 +770,40 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
 "      !./install.sh
 "    endif
 "  endfunction
+"   }}}
+"   Vdebug {{{
+    let g:vdebug_options= {
+    \    "port" : 9000,
+    \    "server" : '',
+    \    "timeout" : 20,
+    \    "on_close" : 'detach',
+    \    "break_on_open" : 1,
+    \    "ide_key" : '',
+    \    "path_maps" : {
+    \      "/data/istock": "/home/jared/projects/istock-vagrant/istock-src"
+    \    },
+    \    "debug_window_level" : 0,
+    \    "debug_file_level" : 0,
+    \    "debug_file" : "",
+    \    "watch_window_style" : 'expanded',
+    \    "marker_default" : '⬦',
+    \    "marker_closed_tree" : '▸',
+    \    "marker_open_tree" : '▾'
+    \}
+
+    let g:vdebug_keymap = {
+    \    "run" : "<F5>",
+    \    "run_to_cursor" : "<F9>",
+    \    "step_over" : "<F3>",
+    \    "step_into" : "<F2>",
+    \    "step_out" : "<F4>",
+    \    "close" : "<F6>",
+    \    "detach" : "<F7>",
+    \    "set_breakpoint" : "<F10>",
+    \    "get_context" : "<F11>",
+    \    "eval_under_cursor" : "<F7>",
+    \    "eval_visual" : "<Leader>e",
+    \}
 "   }}}
 " }}}
 " Mini-plugins ------------------------------------------------------ {{{
