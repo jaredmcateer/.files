@@ -100,15 +100,9 @@ export PATH="$HOME/bin:$PATH"
 # Better prompt with git support
 source ~/.files/.bash-git-prompt/gitprompt.sh 
 
-# Init node version manager
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# Init ruby version manager
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
 # Init fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export PATH="$HOME/.composer/vendor/bin:$PATH"
+
+[ -f ~/.secrets ] && source ~/.secrets

@@ -2,7 +2,7 @@
 	ui = true
 [user]
 	name = Jared McAteer
-	email = jared.mcateer@gettyimages.com
+	email = jared@arterys.com
 [alias]
 	st = status -s
 	d = difftool
@@ -29,7 +29,7 @@
 [difftool]
 	prompt = false
 [difftool "nvimdiff"]
-	cmd = "nvim -d -u ~/.nvimrc \"$LOCAL\" \"$REMOTE\""
+	cmd = "nvim -d -u ~/.config/nvim/init.vim \"$LOCAL\" \"$REMOTE\""
 [push]
 	default = simple
 [core]

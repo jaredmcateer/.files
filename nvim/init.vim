@@ -1,9 +1,8 @@
-" Setup Vundle plugins ---------------------------------------------- {{{
-call plug#begin('~/.nvim/plugged')
+" Setup plugins ----------------------------------------------------- {{{
+call plug#begin('~/.config/nvim/plugged')
 
-Plug 'jaredmcateer/vim-atom-dark'
+"Plug 'jaredmcateer/vim-atom-dark'
 Plug 'tpope/vim-surround'
-Plug 'Townk/vim-autoclose'
 Plug 'tpope/vim-commentary'
 Plug 'kien/ctrlp.vim'
 Plug 'Raimondi/delimitMate'
@@ -11,7 +10,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'bling/vim-airline'
-Plug 'scrooloose/syntastic'
+Plug 'benekastah/neomake'
 Plug 'joonty/vdebug', { 'branch': 'version-2.x' }
 Plug 'tmux-plugins/vim-tmux'
 Plug 'edkolev/tmuxline.vim'
@@ -21,13 +20,19 @@ Plug 'idanarye/vim-merginal'
 Plug 'evidens/vim-twig'
 Plug 'wellle/targets.vim'
 Plug 'sheerun/vim-polyglot'
+Plug 'rking/ag.vim'
+Plug 'Shougo/deoplete.nvim'
+Plug 'guns/xterm-color-table.vim'
+Plug 'freeo/vim-kalisi'
+Plug 'tomasr/molokai'
+Plug 'mhartington/oceanic-next'
 call plug#end()
 
 " }}}
 " Basic Options ----------------------------------------------------- {{{
 filetype plugin indent on
-set nocompatible
-set encoding=utf-8
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"set encoding=utf-8
 set modelines=0
 set autoindent
 set showmode
@@ -91,7 +96,7 @@ autocmd FileType c,cpp,java,php,js,phtml,html autocmd BufWritePre * :%s/\s\+$//e
 
 " Wildmenu completion {{{
 set wildmenu
-set wildmode=list:longest
+set wildmode=longest:list,full
 
 set wildignore+=.hg,.svn,.git
 set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.bmp
@@ -143,7 +148,8 @@ endif
 " Color Scheme {{{
 syntax on
 try
-  colorscheme atom-dark-256
+  set background=dark
+  colorscheme OceanicNext
 catch /^Vim\%((\a\+)\)\=:E185/
 endtry
 
@@ -449,11 +455,16 @@ set foldtext=MyFoldText()
   augroup ft_javascript
     au!
 
-    " Add es5 extension
-    au BufNewFile,BufRead *.es6 setlocal filetype=javascript
+    au FileType javascript,js,json setlocal tabstop=4
+    au FileType javascript,js,json setlocal shiftwidth=4
+    au FileType javascript,js,json setlocal softtabstop=4
 
     " Add es5 extension
+    au BufNewFile,BufRead *.es6 setlocal filetype=javascript
+    " Add eslint extension
     au BufNewFile,BufRead .eslintrc setlocal filetype=javascript
+    " Add jscs extension
+    au BufNewFile,BufRead .jscsrc setlocal filetype=json
 
     au FileType javascript setlocal foldmethod=marker
     au FileType javascript setlocal foldmarker={,}
@@ -461,8 +472,8 @@ set foldtext=MyFoldText()
 
     " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
     " positioned inside of them AND the following code doesn't get unfolded.
-    au Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
-    au Filetype javascript inoremap <buffer> [<cr> []<left><cr><space><space>.<cr><esc>kA<bs>
+    au Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+    au Filetype javascript inoremap <buffer> [<cr> []<left><cr><space><space><space><space>.<cr><esc>kA<bs>
     " }
 
     " Prettify a hunk of JSON with <localleader>p
@@ -597,13 +608,10 @@ set foldtext=MyFoldText()
 "   }}}
 " }}}
 " Plugin settings --------------------------------------------------- {{{
+"   ag {{{
+"   }}}
 "   Airline {{{
   let g:airline_powerline_fonts = 1
-"   }}}
-"   Autoclose {{{
-
-nmap <Leader>x <Plug>ToggleAutoCloseMappings
-
 "   }}}
 "   Commentary {{{
 
@@ -695,6 +703,10 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
 "   Javascript Lib Syntax {{{
   let g:used_javascript_libs = 'underscore,jquery,angular,jasmine'
 "   }}}
+"   Neomake {{{
+  autocmd! BufWritePost * Neomake
+
+"   }}}
 "   NERD Tree {{{
 
   noremap  <leader><F2> :NERDTreeToggle<cr>
@@ -739,8 +751,6 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
 "   Syntastic {{{
   "let g:syntastic_javascript_checkers = ['eslint']
   let g:syntastic_javascript_checkers = ['jscs', 'jshint']
-  let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-  let g:syntastic_php_phpcs_args="--report=csv --standard=PSR2"
   let g:syntastic_error_symbol = '☒'
   let g:syntastic_warning_symbol = '⚠'
   let g:syntastic_style_error_symbol = '✗'
