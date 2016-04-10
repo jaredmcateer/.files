@@ -4,19 +4,6 @@ cto() {
   case "$1" in
     "code" | "base")       cd $CODE_BASE_DIR ;;
     "vag" | "vagrant")     cd $VAGRANT_DIR  ;;
-    "zf")                  cd $ZF_BASE_DIR ;;
-    "public")              cd $ZF_BASE_DIR/public ;;
-    "sass")                cd $SASS_DIR ;;
-    "legacy")              cd $LEGACY_BASE_DIR ;;
-    "angular")             cd $ANGULAR_DIR ;;
-    "app" | "application") cd $APPLICATION_DIR ;;
-    "con" | "controller")  cd $CONTROLLERS_DIR ;;
-    "config")              cd $APPLICATION_DIR/config ;;
-    "web" | "website")     cd $WEBSITE_DIR ;;
-    "istock")              cd $ISTOCK_DIR ;;
-    "unit" | "unittest")   cd $UNITTEST_DIR ;;
-    "uweb" | "uwebsite")   cd $UNITTEST_WEBSITE_DIR ;;
-    "uistock")             cd $UNITTEST_ISTOCK_DIR ;;
     "files")               cls $HOME/.files ;;
     "apache")              cls /etc/apache2/ ;;
     "nginx")               cls /etc/nginx/ ;;
@@ -58,10 +45,11 @@ alias c="clear"
 alias reboot='sudo reboot'
 
 # Apt-get shortcuts
-alias update='sudo apt-get update'
-alias upgrade='sudo apt-get -y upgrade'
-alias upup='update && upgrade'
-alias install='sudo apt-get -y install'
+alias apt-get='apt-fast'
+alias update='sudo apt-fast update'
+alias upgrade='sudo apt-fast -y upgrade'
+alias upup='update && upgrade -y'
+alias install='sudo apt-fast -y install'
 alias search='apt-cache search'
 
 # Audio volume

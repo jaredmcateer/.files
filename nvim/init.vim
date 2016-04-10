@@ -11,10 +11,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'bling/vim-airline'
 Plug 'benekastah/neomake'
-Plug 'joonty/vdebug', { 'branch': 'version-2.x' }
 Plug 'tmux-plugins/vim-tmux'
 Plug 'edkolev/tmuxline.vim'
-Plug 'evanmiller/nginx-vim-syntax'
 Plug 'majutsushi/tagbar'
 Plug 'idanarye/vim-merginal'
 Plug 'evidens/vim-twig'
@@ -26,13 +24,13 @@ Plug 'guns/xterm-color-table.vim'
 Plug 'freeo/vim-kalisi'
 Plug 'tomasr/molokai'
 Plug 'mhartington/oceanic-next'
+Plug 'Shougo/deoplete.nvim'
 call plug#end()
 
 " }}}
 " Basic Options ----------------------------------------------------- {{{
 filetype plugin indent on
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"set encoding=utf-8
 set modelines=0
 set autoindent
 set showmode
@@ -60,7 +58,8 @@ set shiftround
 set title
 set colorcolumn=80,120
 set conceallevel=2
-
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
 " Don't try to highlight lines longer than 400 chars
 set synmaxcol=400
 
@@ -250,6 +249,8 @@ nnoremap <leader>p :set paste!<cr>
 nnoremap <leader>bi :PlugInstall<cr>
 nnoremap <leader>bu :PlugUpdate<cr>
 nnoremap <leader>bc :PlugClean<cr>
+
+nnoremap <leader><f12> :!vagrant ssh -c "sudo service nginx restart &&  sudo service php5-fpm restart && sudo nginx-cachelord . --rm"<cr>
 " }}}
 " Quick Editing ----------------------------------------------------- {{{
 fu! OpenInSplitIfBufferDirty(file)
@@ -650,11 +651,6 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
   \ -g ""'
 
 "   }}}
-"   DBGPavim {{{
-  let g:dbgPavimBreakAtEntry = 1
-  "let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-nginx/istock-src/', '/data/istock/']]
-  let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-apache/istock-src/', '/data/istock/']]
-"   }}}
 "   DelimitMate {{{
 
 "   }}}
@@ -737,35 +733,28 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
   let NERDTreeMapJumpFirstChild = 'gK'
 
 "   }}}
-"   Pangloss Javascript {{{
-  let g:javascript_conceal_function   = "ƒ"
-  let g:javascript_conceal_null       = "ø"
-  let g:javascript_conceal_this       = "@"
-  let g:javascript_conceal_return     = "⇚"
-  let g:javascript_conceal_undefined  = "¿"
-  let g:javascript_conceal_NaN        = "ℕ"
-  let g:javascript_conceal_prototype  = "¶"
-  let g:javascript_conceal_static     = "•"
-  let g:javascript_conceal_super      = "Ω"
+"   Neomake {{{
+  autocmd! BufWritePost * Neomake
 "   }}}
 "   Syntastic {{{
-  "let g:syntastic_javascript_checkers = ['eslint']
-  let g:syntastic_javascript_checkers = ['jscs', 'jshint']
-  let g:syntastic_error_symbol = '☒'
-  let g:syntastic_warning_symbol = '⚠'
-  let g:syntastic_style_error_symbol = '✗'
-  let g:syntastic_style_warning_symbol = '❗'
-  let g:syntastic_aggregate_errors = 1
-
-  nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
-  function! ToggleErrors()
-    let old_last_winnr = winnr('$')
-    lclose
-    if old_last_winnr == winnr('$')
-      " Nothing was closed, open syntastic error location panel
-      Errors
-    endif
-  endfunction
+"  let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+"  let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+"  let g:syntastic_php_phpcs_args="--report=csv --standard=PSR2"
+"  let g:syntastic_error_symbol = '☒'
+"  let g:syntastic_warning_symbol = '⚠'
+"  let g:syntastic_style_error_symbol = '✗'
+"  let g:syntastic_style_warning_symbol = '❗'
+"  let g:syntastic_aggregate_errors = 1
+"
+"  nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
+"  function! ToggleErrors()
+"    let old_last_winnr = winnr('$')
+"    lclose
+"    if old_last_winnr == winnr('$')
+"      " Nothing was closed, open syntastic error location panel
+"      Errors
+"    endif
+"  endfunction
 "   }}}
 "   TagBar {{{
   nmap <leader><F4> :TagbarToggle<CR>
@@ -781,39 +770,6 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
 "    endif
 "  endfunction
 "   }}}
-"   Vdebug {{{
-    let g:vdebug_options= {
-    \    "port" : 9000,
-    \    "server" : '',
-    \    "timeout" : 20,
-    \    "on_close" : 'detach',
-    \    "break_on_open" : 1,
-    \    "ide_key" : '',
-    \    "path_maps" : {
-    \      "/data/istock": "/home/jared/projects/istock-vagrant/istock-src"
-    \    },
-    \    "debug_window_level" : 0,
-    \    "debug_file_level" : 0,
-    \    "debug_file" : "",
-    \    "watch_window_style" : 'expanded',
-    \    "marker_default" : '⬦',
-    \    "marker_closed_tree" : '▸',
-    \    "marker_open_tree" : '▾'
-    \}
-
-    let g:vdebug_keymap = {
-    \    "run" : "<F5>",
-    \    "run_to_cursor" : "<F9>",
-    \    "step_over" : "<F3>",
-    \    "step_into" : "<F2>",
-    \    "step_out" : "<F4>",
-    \    "close" : "<F6>",
-    \    "detach" : "<F7>",
-    \    "set_breakpoint" : "<F10>",
-    \    "get_context" : "<F11>",
-    \    "eval_under_cursor" : "<F7>",
-    \    "eval_visual" : "<Leader>e",
-    \}
 "   }}}
 " }}}
 " Mini-plugins ------------------------------------------------------ {{{

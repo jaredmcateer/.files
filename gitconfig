@@ -1,36 +1,37 @@
 [color]
-	ui = true
+  ui = true
 [user]
-	name = Jared McAteer
-	email = jared@arterys.com
+  name = Jared McAteer
+  email = jared@arterys.com
 [alias]
-	st = status -s
-	d = difftool
-	dc = difftool --cached
-	filelog = log -u
-	fl = log -u
-	dl = git config --global alias.fl log
-	dlc = diff --cached HEAD^
-	ls = log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate
+  st = status
+  d = difftool
+  dc = difftool --cached
+  filelog = log -u
+  fl = log -u
+  dl = git config --global alias.fl log
+  dlc = diff --cached HEAD^
+  ls = log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate
   l   = log -18 --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
   ll  = log     --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
   gl  = log -12 --color=always --all --graph --topo-order --pretty='format:%Cgreen%h%Creset %s %C(black bold)(by %an)%Creset%C(yellow bold)%d%Creset%n'
   gll = log     --color=always --all --graph --topo-order --pretty='format:%Cgreen%h%Creset %s %C(black bold)(%cr by %an)%Creset%C(yellow bold)%d%Creset%n'
-	lds = log --pretty=format:\"%C(yellow)%h\\\\ %ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=short
-	dr = "!f() { git diff \"$1\"^..\"$1\"; }; f"
-	diffr = "!f() { git diff \"$1\"^..\"$1\"; }; f"
-	llr = "!f() { git ll \"$1\"^..\"$1\"; }; f"
-	la = "!git config -l | grep alias | cut -c 7-"
-	f = fetch --prune
+  lds = log --pretty=format:\"%C(yellow)%h\\\\ %ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=short
+  dr = "!f() { git diff \"$1\"^..\"$1\"; }; f"
+  diffr = "!f() { git diff \"$1\"^..\"$1\"; }; f"
+  llr = "!f() { git ll \"$1\"^..\"$1\"; }; f"
+  la = "!git config -l | grep alias | cut -c 7-"
+  f = fetch --prune
+  upmod = submodule foreach git pull origin master
 [mergetool]
-	path = nvim
+  path = nvim
 [diff]
-	tool = nvimdiff
+  tool = nvimdiff
 [difftool]
-	prompt = false
+  prompt = false
 [difftool "nvimdiff"]
-	cmd = "nvim -d -u ~/.config/nvim/init.vim \"$LOCAL\" \"$REMOTE\""
+  cmd = "nvim -d -u ~/.config/nvim/init.vim \"$LOCAL\" \"$REMOTE\""
 [push]
-	default = simple
+  default = simple
 [core]
-	editor = nvim
+  editor = nvim
