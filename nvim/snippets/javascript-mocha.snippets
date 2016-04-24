@@ -1,0 +1,24 @@
+snippet describe
+	describe('${1}', () => {
+		${2}
+	});
+snippet beforeEach
+	beforeEach(() => {
+		${1}
+	});
+snippet it
+	it('should ${1}', (${2}) => {
+		${3}
+	});
+snippet exeql
+	expect(${1}).to.equal(${2});
+snippet extobe
+	expect(${1}).to.${3}be.${2};
+snippet exnull
+	expect(${1}).to.${2}be.null;
+snippet exundef
+	expect(${1}).to.${2}be.undefined;
+snippet exexist
+	expect(${1}).to.${2}exist;
+snippet exempty
+	expect(${1}).to.${2}be.empty;
