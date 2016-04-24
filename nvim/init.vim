@@ -25,6 +25,8 @@ Plug 'freeo/vim-kalisi'
 Plug 'tomasr/molokai'
 Plug 'mhartington/oceanic-next'
 Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/neosnippet.vim'
+Plug 'honza/vim-snippets'
 call plug#end()
 
 " }}}
@@ -456,9 +458,9 @@ set foldtext=MyFoldText()
   augroup ft_javascript
     au!
 
-    au FileType javascript,js,json setlocal tabstop=4
-    au FileType javascript,js,json setlocal shiftwidth=4
-    au FileType javascript,js,json setlocal softtabstop=4
+    au FileType javascript,js,json setlocal tabstop=2
+    au FileType javascript,js,json setlocal shiftwidth=2
+    au FileType javascript,js,json setlocal softtabstop=2
 
     " Add es5 extension
     au BufNewFile,BufRead *.es6 setlocal filetype=javascript
@@ -473,8 +475,8 @@ set foldtext=MyFoldText()
 
     " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
     " positioned inside of them AND the following code doesn't get unfolded.
-    au Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
-    au Filetype javascript inoremap <buffer> [<cr> []<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+    au Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
+    au Filetype javascript inoremap <buffer> [<cr> []<left><cr><space><space>.<cr><esc>kA<bs>
     " }
 
     " Prettify a hunk of JSON with <localleader>p
@@ -553,6 +555,19 @@ set foldtext=MyFoldText()
     au BufRead,BufNewFile Capfile setlocal filetype=ruby
   augroup END
 
+"   }}}
+"   snippets {{{
+  augroup ft_snippet
+    au!
+    au BufRead,BufNewFile *.snippets set ft=snippets
+    au BufRead,BufNewFile *.snippets set syntax=javascript
+    au FileType snippets setlocal noexpandtab
+    au FileType snippets setlocal copyindent
+    au FileType snippets setlocal preserveindent
+    au FileType snippets setlocal softtabstop=0
+    au FileType snippets setlocal tabstop=2
+    au FileType snippets setlocal shiftwidth=2
+  augroup END
 "   }}}
 "   Standard In {{{
 
@@ -656,6 +671,7 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
 "   }}}
 "   Deoplete {{{
   let g:deoplete#enable_at_startup = 1
+  let g:deoplete#file#enable_buffer_path = 1
 "   }}}
 "   Fugitive {{{
 
@@ -701,6 +717,26 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
 "   }}}
 "   Neomake {{{
   autocmd! BufWritePost * Neomake
+
+"   }}}
+"   Neosnippet {{{
+  let g:neosnippet#disable_runtime_snippets = { '_' : 1 }
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#snippets_directory = '$HOME/.config/nvim/plugged/vim-snippets/snippets'
+  " Plugin key-mappings.
+  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+  " SuperTab like snippets behavior.
+  "imap <expr><TAB>
+  " \ pumvisible() ? "\<C-n>" :
+  " \ neosnippet#expandable_or_jumpable() ?
+  " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+  nnoremap <leader>rs :call neosnippet#variables#set_snippets({})<cr>
 
 "   }}}
 "   NERD Tree {{{
