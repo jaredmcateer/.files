@@ -23,7 +23,7 @@ if [ "$TERM" = "xterm" ]; then
       gnome-terminal)
         # Those crafty Gnome folks require you to check COLORTERM,
         # But don't allow you to just *favour* the setting over TERM.
-        # Instead you need to compare it and perform guesses based 
+        # Instead you need to compare it and perform guesses based
         # upon the value. This is, perhaps too simplistic.
         TERM="xterm-256color"
         ;;
@@ -45,7 +45,7 @@ esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-HISTCONTROL=ignoreboth
+HISTCONTROL=ignoredups:erasedups
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -98,7 +98,7 @@ fi
 export PATH="$HOME/bin:$PATH"
 
 # Better prompt with git support
-source ~/.files/.bash-git-prompt/gitprompt.sh 
+source ~/.files/.bash-git-prompt/gitprompt.sh
 
 # Init fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -107,5 +107,16 @@ export PATH="$HOME/.composer/vendor/bin:$PATH"
 
 [ -f ~/.secrets ] && source ~/.secrets
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+export MORPHEUS_LIB_PATH="/usr/lib/nvidia-378"
+
+export PATH="$HOME/.nodenv/bin:$PATH"
+eval "$(nodenv init -)"
+
+#npm tab completion
+source ~/.files/npm-completion
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
+export CUDA_HOME=/usr/local/cuda
+export PATH=/usr/local/cuda-7.5/bin:$PATH:/opt/miniconda3/bin

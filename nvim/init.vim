@@ -1,32 +1,46 @@
 " Setup plugins ----------------------------------------------------- {{{
 call plug#begin('~/.config/nvim/plugged')
 
-"Plug 'jaredmcateer/vim-atom-dark'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'kien/ctrlp.vim'
+" "Plug 'jaredmcateer/vim-atom-dark'
+"Plug 'edkolev/tmuxline.vim'
+"Plug 'evanmiller/nginx-vim-syntax'
+"Plug 'freeo/vim-kalisi'
+"Plug 'guns/xterm-color-table.vim'
+"Plug 'idanarye/vim-merginal'
+"Plug 'moll/vim-node'
+"Plug 'nathanaelkane/vim-indent-guides'
+"Plug 'tmux-plugins/vim-tmux'
+
+"Plug 'easymotion/vim-easymotion'
 Plug 'Raimondi/delimitMate'
-Plug 'tpope/vim-fugitive'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'bling/vim-airline'
-Plug 'benekastah/neomake'
-Plug 'tmux-plugins/vim-tmux'
-Plug 'edkolev/tmuxline.vim'
-Plug 'majutsushi/tagbar'
-Plug 'idanarye/vim-merginal'
-Plug 'evidens/vim-twig'
-Plug 'wellle/targets.vim'
-Plug 'sheerun/vim-polyglot'
-Plug 'rking/ag.vim'
-Plug 'Shougo/deoplete.nvim'
-Plug 'guns/xterm-color-table.vim'
-Plug 'freeo/vim-kalisi'
-Plug 'tomasr/molokai'
-Plug 'mhartington/oceanic-next'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neosnippet.vim'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'airblade/vim-gitgutter'
+Plug 'albfan/ag.vim'
+Plug 'albfan/vim-timelapse'
+Plug 'ap/vim-css-color'
+Plug 'benekastah/neomake'
+Plug 'bling/vim-airline'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'digitaltoad/vim-pug'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'endel/vim-github-colorscheme'
 Plug 'honza/vim-snippets'
+Plug 'joshdick/onedark.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'kergoth/vim-hilinks'
+Plug 'majutsushi/tagbar'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'sheerun/vim-polyglot'
+Plug 'ternjs/tern_for_vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'wellle/targets.vim'
+
 call plug#end()
 
 " }}}
@@ -58,10 +72,10 @@ set autowrite
 set autoread
 set shiftround
 set title
-set colorcolumn=80,120
 set conceallevel=2
 let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
+set showtabline=0
 " Don't try to highlight lines longer than 400 chars
 set synmaxcol=400
 
@@ -91,7 +105,7 @@ augroup trailing
 augroup END
 
 " Remove trailing whitespace on save
-autocmd FileType c,cpp,java,php,js,phtml,html autocmd BufWritePre * :%s/\s\+$//e
+autocmd FileType c,cpp,java,php,js,json,ejs,phtml,html autocmd BufWritePre * :%s/\s\+$//e
 
 " }}}
 
@@ -126,7 +140,7 @@ set expandtab
 set nowrap
 set textwidth=120
 set formatoptions=qrn1j
-set colorcolumn=80,120
+set colorcolumn=100,120
 " }}}
 " Backups {{{
 set backup
@@ -150,7 +164,8 @@ endif
 syntax on
 try
   set background=dark
-  colorscheme OceanicNext
+  colorscheme onedark
+  hi Comment guifg=#bada55
 catch /^Vim\%((\a\+)\)\=:E185/
 endtry
 
@@ -175,8 +190,19 @@ iabbrev reutnr return
 cabbr <expr> %% expand('%:p:h')
 " }}}
 " Convience mappings ------------------------------------------------ {{{
+nmap <leader>q cs"'
 noremap <F1> :checktime<cr>
 inoremap <F1> <esc>:checktime<cr>
+
+noremap <leader>t :call DiffToggle()<cr>
+
+function! DiffToggle()
+  if &diff
+    diffoff
+  else
+    diffthis
+  endif
+:endfunction
 
 inoremap jj <esc>
 " Tabs
@@ -247,12 +273,11 @@ command! -bang WQ wq<bang>
 " Paste toggle
 nnoremap <leader>p :set paste!<cr>
 
-" Vundle Keys
+" Vim-plug Keys
 nnoremap <leader>bi :PlugInstall<cr>
 nnoremap <leader>bu :PlugUpdate<cr>
 nnoremap <leader>bc :PlugClean<cr>
 
-nnoremap <leader><f12> :!vagrant ssh -c "sudo service nginx restart &&  sudo service php5-fpm restart && sudo nginx-cachelord . --rm"<cr>
 " }}}
 " Quick Editing ----------------------------------------------------- {{{
 fu! OpenInSplitIfBufferDirty(file)
@@ -289,9 +314,12 @@ nnoremap D d$
 
 " Don't move on *
 nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
+nnoremap <silent> & :%s///gn<cr>
 
+" Open file under cursor in new split
+nnoremap gf <c-w>vgf
 
-set tags=tags;
+set tags=./tags,tags,jsctags;
 " Jumping to tags.
 "
 " Basically, <c-]> jumps to tags (like normal) and <c-\> opens the tag in a new
@@ -402,15 +430,27 @@ endfunction " }}}
 set foldtext=MyFoldText()
 " }}}
 " File-type specific ------------------------------------------------ {{{
+"   asciidoc {{{
+  augroup ft_asciidoc
+    au!
+    au BufNewFile,BufRead *.adoc setlocal filetype=asciidoc
+
+    au FileType asciidoc setlocal wrap linebreak nolist
+    au FileType asciidoc setlocal synmaxcol=1000
+  augroup END
+"   }}}
 "   CSS & Sass {{{
 
   augroup ft_css
     au!
     au BufNewFile,BufRead *.scss setlocal filetype=sass
-    au FileType sass,css setlocal foldmarker={,}
-    au FileType sass,css setlocal omnifunc=csscomplete#CompleteCSS
-    au FileType sass,css setlocal iskeyword+=-
+    au FileType less,sass,css setlocal foldmarker={,}
+    au FileType less,sass,css setlocal omnifunc=csscomplete#CompleteCSS
+    au FileType less,sass,css setlocal iskeyword+=-
 
+    au FileType less,css,sass setlocal tabstop=4
+    au FileType less,css,sass setlocal shiftwidth=4
+    au FileType less,css,sass setlocal softtabstop=4
     " Use <leader>S to sort properties.  Turns this:
     "
     "     p {
@@ -461,6 +501,10 @@ set foldtext=MyFoldText()
     au FileType javascript,js,json setlocal tabstop=2
     au FileType javascript,js,json setlocal shiftwidth=2
     au FileType javascript,js,json setlocal softtabstop=2
+    au BufNewFile,BufRead /home/jared/arterys/bitterheart/* setlocal tabstop=2 shiftwidth=2 softtabstop=2
+
+    " autocmd BufReadPost,BufWritePost  *.js %substitute/^\( \+\)\1/\1/e
+    " autocmd BufWritePre               *.js %substitute/^ \+/&&/e
 
     " Add es5 extension
     au BufNewFile,BufRead *.es6 setlocal filetype=javascript
@@ -482,6 +526,10 @@ set foldtext=MyFoldText()
     " Prettify a hunk of JSON with <localleader>p
     au FileType javascript nnoremap <buffer> <localleader>p ^vg_:!python -m json.tool<cr>
     au FileType javascript vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
+    "au FilterWritePre * if &diff | colorscheme github | set conceallevel=0 | endif
+
+    " Wrap a variable with ${} for string templates
+    vmap <leader>] S}i$<esc>
   augroup END
 
 "   }}}
@@ -540,6 +588,7 @@ set foldtext=MyFoldText()
   augroup END
 "   }}}
 "   QuickFix {{{
+
 
   augroup ft_quickfix
     au!
@@ -628,6 +677,7 @@ set foldtext=MyFoldText()
 "   }}}
 "   Airline {{{
   let g:airline_powerline_fonts = 1
+  let g:airline_theme = 'onedark'
 "   }}}
 "   Commentary {{{
 
@@ -637,10 +687,11 @@ xmap <leader>c <Plug>Commentary
 "   }}}
 "   Ctrl-P {{{
 
-let g:ctrlp_jump_to_buffer = 0
+let g:ctrlp_jump_to_buffer = 'ET'
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_max_height = 20
 let g:ctrlp_extensions = ['tag']
+let g:ctrlp_follow_symlinks = 1
 
 let g:ctrlp_map = '<leader>,'
 nnoremap <leader>. :CtrlPTag<cr>
@@ -652,6 +703,8 @@ let g:ctrlp_prompt_mappings = {
 \ 'PrtHistory(-1)':       ['<c-n>'],
 \ 'PrtHistory(1)':        ['<c-p>'],
 \ 'ToggleFocus()':        ['<c-tab>'],
+\ 'AcceptSelection("t")': [''],
+\ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>', '<c-t>'],
 \ }
 
 let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
@@ -663,8 +716,30 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
   \ --ignore msribbon
   \ --ignore node_modules
   \ --ignore test_out
+  \ --ignore eigen
+  \ --ignore **/mocha/lib
+  \ --ignore chef-solo
+  \ --ignore chef
+  \ --ignore back-end
+  \ --ignore bower_components
+  \ --ignore cache
+  \ --ignore docker
+  \ --ignore vision
+  \ --ignore end-to-end-testing
   \ -g ""'
 
+"   }}}
+"   CtrlSpace {{{
+  let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+  let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
+  if executable("ag")
+      let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
+  endif
+"   }}}
+"   DBGPavim {{{
+  let g:dbgPavimBreakAtEntry = 1
+  "let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-nginx/istock-src/', '/data/istock/']]
+  let g:dbgPavimPathMap = [['/home/jared/projects/vagrant-apache/istock-src/', '/data/istock/']]
 "   }}}
 "   DelimitMate {{{
 
@@ -672,6 +747,34 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
 "   Deoplete {{{
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#file#enable_buffer_path = 1
+"   }}}
+"   EasyAlign {{{
+  " Start interactive EasyAlign in visual mode (e.g. vipga)
+  xmap ga <Plug>(EasyAlign)
+
+  " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+  nmap ga <Plug>(EasyAlign)
+"   }}}
+"   EasyMotion {{{
+  map <Leader> <Plug>(easymotion-prefix)
+
+  " <Leader>f{char} to move to {char}
+  " map  <Leader>f <Plug>(easymotion-bd-f)
+  " nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+  " s{char}{char} to move to {char}{char}
+  nmap s <Plug>(easymotion-overwin-f2)
+
+  " Move to line
+  map <Leader>L <Plug>(easymotion-bd-jk)
+  nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+  " Move to word
+  map  <Leader>w <Plug>(easymotion-bd-w)
+  nmap <Leader>w <Plug>(easymotion-overwin-w)
+""   }}}
+"   EnhacnedDiff {{{
+  let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
 "   }}}
 "   Fugitive {{{
 
@@ -712,11 +815,25 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
   let g:atia_attributes_complete = 0
 
 "   }}}
+"   Indent Guides {{{
+  let  g:indent_guides_auto_colors = 0
+  autocmd VimEnter,ColorScheme * :hi IndentGuidesOdd guibg=#333333
+  autocmd VimEnter,ColorScheme * :hi IndentGuidesEven guibg=#3f3f3f
+"   }}}
 "   Javascript Lib Syntax {{{
-  let g:used_javascript_libs = 'underscore,jquery,angular,jasmine'
+  let g:used_javascript_libs = 'd3,underscore,jquery,jasmine'
+"   }}}
+"   jsDoc {{{
+  let g:jsdoc_allow_input_prompt = 1
+  let g:jsdoc_input_description = 1
+  let g:jsdoc_underscore_private = 1
+  let g:jsdoc_enable_es6 = 1
 "   }}}
 "   Neomake {{{
   autocmd! BufWritePost * Neomake
+  let g:neomake_javascript_enabled_makers = ['eslint']
+  let g:neomake_open_list = 2
+  let g:neomake_html_enabled_makers = []
 
 "   }}}
 "   Neosnippet {{{
@@ -767,6 +884,7 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
   let NERDTreeChDirMode = 2
   let NERDTreeQuitOnOpen = 1
   let NERDTreeMapJumpFirstChild = 'gK'
+  let NERDTreeMapOpenInTab='\t'
 
 "   }}}
 "   Neomake {{{
@@ -791,20 +909,53 @@ nnoremap <leader>u V:Gbrowse @upstream<cr>
 "      Errors
 "    endif
 "  endfunction
+"   Polyglot {{{
+  let g:javascript_plugin_jsdoc = 1
+  let g:javascript_plugin_ngdoc = 1
+  let g:javascript_conceal_function       = "ƒ"
+  let g:javascript_conceal_null           = "ø"
+  let g:javascript_conceal_this           = "@"
+  let g:javascript_conceal_return         = "⇚"
+  let g:javascript_conceal_undefined      = "¿"
+  let g:javascript_conceal_NaN            = "ℕ"
+  let g:javascript_conceal_prototype      = "¶"
+  let g:javascript_conceal_static         = "•"
+  let g:javascript_conceal_super          = "Ω"
+  let g:javascript_conceal_arrow_function = "⇒"
+"   }}}
+"   Syntastic {{{
+  let g:syntastic_javascript_checkers = ['eslint']
+  "let g:syntastic_javascript_checkers = ['jscs', 'jshint']
+  let g:syntastic_error_symbol = '☒'
+  let g:syntastic_warning_symbol = '⚠'
+  let g:syntastic_style_error_symbol = '✗'
+  let g:syntastic_style_warning_symbol = '❗'
+  let g:syntastic_aggregate_errors = 1
+
+  nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
+  function! ToggleErrors()
+    let old_last_winnr = winnr('$')
+    lclose
+    if old_last_winnr == winnr('$')
+      " Nothing was closed, open syntastic error location panel
+      Errors
+    endif
+  endfunction
 "   }}}
 "   TagBar {{{
   nmap <leader><F4> :TagbarToggle<CR>
 "   }}}
-"   YouCompleteMe {{{
-"  function BuildYCM(info)
-"    " info is a dictionary of 3 fields
-"    " name: name of plugin
-"    " status: 'installed', 'updated', 'unchanged'
-"    " force: set on PlugInstall! or PlugUpdate!
-"    if a:info.status == 'installed' || a:info.force
-"      !./install.sh
-"    endif
-"  endfunction
+"   Tern {{{
+  let g:tern_map_keys=1
+"   }}}
+"   UltiSnips {{{
+  let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/plugged/UltiSnips',$HOME.'/.config/nvim/plugged/vim-snippets/UltiSnips']
+  " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsJumpForwardTrigger="<c-b>"
+  let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+  " If you want :UltiSnipsEdit to split your window.
+  let g:UltiSnipsEditSplit="vertical"
 "   }}}
 "   }}}
 " }}}
@@ -917,5 +1068,11 @@ command! -nargs=1 J call s:JumpTo(<f-args>)
   command! -nargs=0 Pulse call s:Pulse()
 
 "   }}}
-
+"   ag {{{
+  if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+  endif
+  nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+  set switchbuf+=usetab,newtab
+"   }}}
 " }}}

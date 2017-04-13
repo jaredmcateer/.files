@@ -16,3 +16,5 @@ flash/
 fonts/
 docs/
 audio/
+bower_components/
+chef-solo/

@@ -128,3 +128,25 @@ extract() {
 pwdfor() {
   lpass ls | ag $1 | sed -r 's/.*id: ([0-9]+).*/\1/g' | xargs lpass show
 }
+
+alias nodeenv="nodenv"
+
+alias ngninx-restart="sudo service nginx restart"
+alias nginx-restart="sudo service nginx restart"
+
+alias acl="arty cluster list --region=us-west-1"
+alias acd="arty cluster describe --region=us-west-1"
+alias acc="arty cluster create --region=us-west-1"
+alias acs="arty cluster security --region=us-west-1 --open"
+alias acrm="arty cluster delete --region=us-west-1"
+
+get_jenkins_stream() {
+  ssh $1  -- "/opt/morpheus/ffmpeg/ffmpeg -f x11grab -r 30 -video_size 1920x1080 -i :1 -qscale 0.1 -vcodec mpeg4 -f matroska - "| vlc -
+}
+
+alias lcd=changeDirectory
+changeDirectory () {
+  cd $1; ls -la
+}
+
+alias ag="ag --color-match=31"

@@ -2,7 +2,7 @@
   ui = true
 [user]
   name = Jared McAteer
-  email = jared@arterys.com
+  email = jared.mcateer@gmail.com
 [alias]
   st = status
   d = difftool
@@ -23,6 +23,9 @@
   la = "!git config -l | grep alias | cut -c 7-"
   f = fetch --prune
   upmod = submodule foreach git pull origin master
+  staaash = stash --all
+  staash = stash --include-untracked
+  stsh = stash --keep-index
 [mergetool]
   path = nvim
 [diff]
@@ -35,3 +38,33 @@
   default = simple
 [core]
   editor = nvim
+  quotepath = false
+  pager = diff-so-fancy | less --tabs=4 -RFX
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[pull]
+  rebase = true
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
+[diff-so-fancy]
+  stripLeadingSymbols = false
+[pager]
+  diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
