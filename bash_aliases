@@ -150,3 +150,5 @@ changeDirectory () {
 }
 
 alias ag="ag --color-match=31"
+
+alias dw=" docker/dev-env-exec.sh 'mongo --eval \"db.workspace.drop()\"'"

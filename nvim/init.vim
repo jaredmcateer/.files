@@ -25,7 +25,6 @@ Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'digitaltoad/vim-pug'
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'endel/vim-github-colorscheme'
 Plug 'honza/vim-snippets'
 Plug 'joshdick/onedark.vim'
 Plug 'junegunn/vim-easy-align'
@@ -40,13 +39,16 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'wellle/targets.vim'
+Plug 'chrisbra/vim-diff-enhanced'
+Plug 'PeterRincker/vim-argumentative'
 
 call plug#end()
 
 " }}}
 " Basic Options ----------------------------------------------------- {{{
 filetype plugin indent on
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+set termguicolors
+set guicursor=
 set modelines=0
 set autoindent
 set showmode
@@ -187,6 +189,11 @@ iabbrev funciton function
 iabbrev functoin function
 iabbrev retrun return
 iabbrev reutnr return
+iabbrev segement segment
+iabbrev classifition classification
+iabbrev classificaiton classification
+iabbrev classficaiton classification
+iabbrev classifciotn classification
 cabbr <expr> %% expand('%:p:h')
 " }}}
 " Convience mappings ------------------------------------------------ {{{
@@ -498,9 +505,9 @@ set foldtext=MyFoldText()
   augroup ft_javascript
     au!
 
-    au FileType javascript,js,json setlocal tabstop=2
-    au FileType javascript,js,json setlocal shiftwidth=2
-    au FileType javascript,js,json setlocal softtabstop=2
+    au FileType javascript,js,json setlocal tabstop=4
+    au FileType javascript,js,json setlocal shiftwidth=4
+    au FileType javascript,js,json setlocal softtabstop=4
     au BufNewFile,BufRead /home/jared/arterys/bitterheart/* setlocal tabstop=2 shiftwidth=2 softtabstop=2
 
     " autocmd BufReadPost,BufWritePost  *.js %substitute/^\( \+\)\1/\1/e
